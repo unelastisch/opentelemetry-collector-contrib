@@ -136,6 +136,10 @@ func (gar *githubActionsReceiver) ServeHTTP(w http.ResponseWriter, r *http.Reque
 			w.WriteHeader(http.StatusNoContent)
 			return
 		}
+	default:
+		gar.logger.Debug("Skipping unsupported event type", zap.String("event_type", github.WebHookType(r)))
+		w.WriteHeader(http.StatusNoContent)
+		return
 	}
 
 	// Convert the GitHub event to OpenTelemetry traces

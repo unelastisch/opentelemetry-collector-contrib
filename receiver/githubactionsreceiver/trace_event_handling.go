@@ -51,7 +51,7 @@ func eventToTraces(event interface{}, config *Config, logger *zap.Logger) (ptrac
 		createRootSpan(resourceSpans, e, traceID, logger)
 
 	default:
-		logger.Error("unknown event type, dropping payload")
+		logger.Error("unknown event type, dropping payload", zap.Any("event", e))
 		return ptrace.Traces{}, fmt.Errorf("unknown event type")
 	}
 
