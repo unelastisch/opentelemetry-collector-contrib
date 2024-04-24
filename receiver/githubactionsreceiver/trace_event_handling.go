@@ -70,7 +70,7 @@ func createParentSpan(scopeSpans ptrace.ScopeSpans, steps []*github.TaskStep, jo
 	span.SetSpanID(jobSpanID)
 
 	span.SetName(job.GetName())
-	span.SetKind(ptrace.SpanKindServer)
+	span.SetKind(ptrace.SpanKindInternal)
 	if len(steps) > 0 {
 		setSpanTimes(span, steps[0].GetStartedAt().Time, steps[len(steps)-1].GetCompletedAt().Time)
 	} else {
@@ -193,7 +193,7 @@ func createSpan(scopeSpans ptrace.ScopeSpans, step *github.TaskStep, job *github
 	setSpanTimes(span, step.GetStartedAt().Time, step.GetCompletedAt().Time)
 
 	span.SetName(step.GetName())
-	span.SetKind(ptrace.SpanKindServer)
+	span.SetKind(ptrace.SpanKindInternal)
 
 	switch step.GetConclusion() {
 	case "success":
