@@ -93,6 +93,8 @@ func createResourceAttributes(resource pcommon.Resource, event interface{}, conf
 		attrs.PutStr("ci.github.workflow.run.sender.login", e.GetSender().GetLogin())
 		attrs.PutStr("ci.github.workflow.run.triggering_actor.login", e.GetWorkflowRun().GetTriggeringActor().GetLogin())
 		attrs.PutStr("ci.github.workflow.run.updated_at", e.GetWorkflowRun().GetUpdatedAt().Format(time.RFC3339))
+		duration := e.GetWorkflowRun().GetUpdatedAt().Sub(e.GetWorkflowRun().GetRunStartedAt().Time)
+		attrs.PutInt("ci.github.workflow.run.duration_millis", duration.Milliseconds())
 
 		attrs.PutStr("ci.system", "github")
 
